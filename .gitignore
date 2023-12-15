@@ -1,0 +1,26 @@
+# Node.js
+node_modules/
+
+# Logs
+*.log
+
+# Environment variables
+.env
+
+# Dependency directories
+pnpm-lock.yaml
+yarn-error.log
+.pnp
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# VSCode configuration
+.vscode/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
