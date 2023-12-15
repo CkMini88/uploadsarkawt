@@ -36,13 +36,6 @@ const askQuestions = (chatId, questions) => {
   askQuestion(0);
 };
 
-bot.onText(/\/start/, (msg) => {
-  const chatId = msg.chat.id;
-  const fullName = msg.from.first_name + ' ' + msg.from.last_name;
-
-  const greetingMessage = ` سڵاو بەڕێز ${fullName} بەخێربێت بۆ پرۆژەی ژیانت تکایە کلیک لە دوگمەی (ناسینی پرۆژە) بکە بۆ دەست پێکردن.`;
-
-
   const buttons = [
     [
       { text: 'ناسینی پرۆژە', callback_data: 'project_notification' },
@@ -214,6 +207,13 @@ case 'project_notification':
         break;
     }
   });
+
+  bot.onText(/\/start/, (msg) => {
+    const chatId = msg.chat.id;
+    const fullName = msg.from.first_name + ' ' + msg.from.last_name;
+  
+    const greetingMessage = ` سڵاو بەڕێز ${fullName} بەخێربێت بۆ پرۆژەی ژیانت تکایە کلیک لە دوگمەی (ناسینی پرۆژە) بکە بۆ دەست پێکردن.`;
+  
 
   const copyrightMessage = `\n\n\n© ${new Date().getFullYear()} Kosar Tarkhany & Aso Jabary. All Rights Reserved`;
 
