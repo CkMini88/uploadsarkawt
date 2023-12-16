@@ -1,3 +1,4 @@
+
 const TelegramBot = require('node-telegram-bot-api');
 const fs = require('fs');
 const express = require('express');
@@ -11,7 +12,7 @@ app.use(bodyParser.json());
 const botToken = process.env.TELEGRAM_BOT_TOKEN || '6879095081:AAFrORCGH9SQ9N68p1enYwGtDzUHXUtLaKM'; 
 const bot = new TelegramBot(botToken, { polling: true });
 
-const adminChatId = -4081494518;
+const adminChatId = -1002125523786;
 
 let voiceOptionClicked = false; 
 
@@ -226,30 +227,6 @@ case 'project_notification':
   });
 });
 
-app.get('/status', (req, res) => {
-  const status = {
-    botStatus: 'Online',
-    uptime: process.uptime(),
-    
-  };
-  res.json(status);
-});
-
-const sendPing = () => {
-  const chatId = '@Sarkawt_Nure_Sorani_Bot'; 
-
-  bot.sendMessage(chatId, '/start'); 
-};
-
-const pingInterval = 30 * 1000; 
-setInterval(sendPing, pingInterval);
-
-app.post(`https://t.me/Sarkawt_Nure_Sorani_Bot`, (req, res) => {
-  const body = req.body;
-  bot.processUpdate(body);
-  res.sendStatus(200);
-});
-
 app.listen(port, () => {
   console.log(`Express server is running on port ${port}`);
-});
+}); 
