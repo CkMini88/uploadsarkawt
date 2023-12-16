@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 const botToken = process.env.TELEGRAM_BOT_TOKEN || '6666684630:AAElyBHdrMqJBECSWMivJ4uNohAwYmXOLjI'; 
 const bot = new TelegramBot(botToken, { polling: true });
 
-const adminChatId = -4081494518;
+const adminChatId = -1002125523786;
 
 let voiceOptionClicked = false; 
 
@@ -219,30 +219,6 @@ case 'project_notification':
       inline_keyboard: buttons,
     },
   });
-});
-
-app.get('/status', (req, res) => {
-  const status = {
-    botStatus: 'Online',
-    uptime: process.uptime(),
-    
-  };
-  res.json(status);
-});
-
-const sendPing = () => {
-  const chatId = '@Sarkawt_Nure_Sorani_Bot'; 
-
-  bot.sendMessage(chatId, '/start'); 
-};
-
-const pingInterval = 30 * 1000; 
-setInterval(sendPing, pingInterval);
-
-app.post(`https://t.me/Sarkawt_Nure_Sorani_Bot`, (req, res) => {
-  const body = req.body;
-  bot.processUpdate(body);
-  res.sendStatus(200);
 });
 
 app.listen(port, () => {
