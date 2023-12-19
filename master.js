@@ -227,6 +227,11 @@ case 'project_notification':
   });
 });
 
+app.head('/ping', (req, res) => {
+  console.log('Received ping'); // Log information when the bot receives a ping
+  res.status(200).send('Pong!');
+});
+
 app.listen(port, () => {
   console.log(`Express server is running on port ${port}`);
 }); 
