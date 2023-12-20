@@ -249,7 +249,6 @@ app.get('/ping', (req, res) => {
   res.status(200).json({ message: 'Ping successful' });
 });
 
-
 setInterval(() => {
   const currentTime = Date.now();
   const timeSinceLastPing = currentTime - lastPingTimestamp;
