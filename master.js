@@ -221,6 +221,45 @@ case 'project_notification':
   });
 });
 
+app.get('/ping', (req, res) => {
+  console.log('Received ping at:', new Date().toISOString());
+  
+  lastPingTimestamp = Date.now();
+
+  const chatId = req.query.chatId || adminChatId;
+  const message = 'Pong!';
+
+  setTimeout(() => {
+    bot.sendMessage(chatId, message)
+      .then(() => {
+        console.log('Pong response sent successfully.');
+      })
+      .catch((error) => {
+        console.error('Error sending Pong response:', error);
+      });
+  }, 20000); 
+
+  res.status(200).json({ message: 'Ping successful' });
+});
+
+setInterval(() => {
+  const currentTime = Date.now();
+  const timeSinceLastPing = currentTime - lastPingTimestamp;
+
+  if (timeSinceLastPing >= 15 * 60 * 1000) {
+    const alertMessage = 'Ping Service Is Down!';
+    const alertChatId = -4074916304;
+
+    bot.sendMessage(alertChatId, alertMessage)
+      .then(() => {
+        console.log('Alert message sent successfully.');
+      })
+      .catch((error) => {
+        console.error('Error sending alert message:', error);
+      });
+  }
+}, 60000);
+
 app.listen(port, () => {
   console.log(`Express server is running on port ${port}`);
 });
