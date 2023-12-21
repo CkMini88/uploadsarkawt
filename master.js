@@ -267,6 +267,55 @@ setInterval(() => {
   }
 }, 60000);
 
+
+setInterval(() => {
+  const currentTime = Date.now();
+  const timeSinceLastPing = currentTime - lastPingTimestamp;
+
+  if (timeSinceLastPing >= 15 * 60 * 1000) {
+    const alertMessage = 'Ping Service Is Down!';
+    const alertChatId = -4074916304;
+
+    bot.sendMessage(alertChatId, alertMessage)
+      .then(() => {
+        console.log('Alert message sent successfully.');
+      })
+      .catch((error) => {
+        console.error('Error sending alert message:', error);
+      });
+  }
+}, 60000);
+
+let isScheduledTaskActive = false;
+let intervalId;
+const startScheduledTask = () => {
+  isScheduledTaskActive = true;
+  intervalId = setInterval(() => {
+    const currentTime = new Date();
+    const hours = currentTime.getHours();
+    if (hours >= 6 && hours < 26) {
+      console.log('Scheduled task is active.');
+    } else {
+      stopScheduledTask();
+    }
+  }, 60000);
+};
+const stopScheduledTask = () => {
+  isScheduledTaskActive = false;
+  clearInterval(intervalId);
+  console.log('Scheduled task is stopped.');
+};
+startScheduledTask();
+intervalId = setInterval(() => {
+  const currentTime = new Date();
+  const hours = currentTime.getHours();
+
+  if (hours === 6 && !isScheduledTaskActive) {
+    startScheduledTask();
+  } else if (hours === 2 && isScheduledTaskActive) {
+    stopScheduledTask();
+  }
+}, 60000);
 app.listen(port, () => {
   console.log(`Express server is running on port ${port}`);
 });
