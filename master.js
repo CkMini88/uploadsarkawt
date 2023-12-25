@@ -13,38 +13,44 @@ const links = [
   { name: 'Sarkawt Arabic', url: 'https://api.render.com/deploy/srv-cm4o8oen7f5s73c0subg?key=hZvD-oq5L_Y' },
 ];
 
-const checkLinks = async () => {
-  let successCount = 0;
-
-  const responses = await Promise.allSettled(links.map(link => axios.get(link.url, { timeout: 20000 })));
-
+const sendGetRequest = async () => {
   const currentTimeStamp = new Date().toLocaleString('en-US', { timeZone: 'Asia/Baghdad' });
 
-  responses.forEach((response, index) => {
-    const link = links[index];
-    const serverNumber = index + 1;
+  for (const link of links) {
+    try {
+      const startTime = new Date();
+      console.log(`Sending ping to ${link.name} at ${startTime.toLocaleString()}`);
+      
+      await axios.get(link.url, { timeout: 20000 });
 
-    if (response.status === 'rejected') {
-      const errorMessage = `⚠️ [Alert System Unresponsive] ⚠️\n\nAttention: 🚨 The monitoring system has detected Server SleepDown.!!\n\nSystem Details 🔍\n………………………………………………….\n👨 Moniter-Name: Kosar Tarkhany 👀\n\n💻 System: ${link.name}\n\n🕒 Time-Stamp: ${currentTimeStamp}\n\n🚨 Server-Status: Down\n\n🔢 Server-Number: Server ${serverNumber}\n\n❌ Unresponded-PingNum: 1 Ping`;
+      const endTime = new Date();
+      const responseTime = endTime - startTime;
+
+      console.log(`Got a response for ${link.name} at ${endTime.toLocaleString()} in ${responseTime} milliseconds`);
+
+      if (responseTime > 20000) {
+        const errorMessage = `⚠️ [Alert System Unresponse] ⚠️\n\nAttention: 🚨 The monitoring system has detected a slow response from Server ${links.indexOf(link) + 1}.!!\n\nSystem Details 🔍\n………………………………………………….\n👨 Moniter-Name: Kosar Tarkhany 👀\n\n💻 System: ${link.name}\n\n🕒 Time-Stamp: ${currentTimeStamp}\n\n⏱️ Response Time: ${responseTime} milliseconds`;
+
+        bot.sendMessage(chatId, errorMessage);
+      }
+    } catch (error) {
+      const errorMessage = `⚠️ [Alert System Unresponsive] ⚠️\n\nAttention: 🚨 The monitoring system has detected Server SleepDown.!!\n\nSystem Details 🔍\n………………………………………………….\n👨 Moniter-Name: Kosar Tarkhany 👀\n\n💻 System: ${link.name}\n\n🕒 Time-Stamp: ${currentTimeStamp}\n\n🚨 Server-Status: Down\n\n🔢 Server-Number: ${links.indexOf(link) + 1}\n\n❌ Unresponded-PingNum: 1 Ping`;
 
       bot.sendMessage(chatId, errorMessage);
-    } else {
-      successCount++;
-      console.log(`Bot got a response for ${link.name}`);
     }
-  });
 
-  const uptimePercentage = (successCount / links.length) * 100;
-  const reportMessage = `...`; // (Your report message)
+    await new Promise(resolve => setTimeout(resolve, 20000));
+  }
 
-  bot.sendMessage(chatId, reportMessage);
+  
 };
+
 
 const app = express();
 const port = 3000;
 
-app.get('/send-monitoring-report', (req, res) => {
-  checkLinks();
+app.get('/send-monitoring-report', async (req, res) => {
+  await sendGetRequest();
   res.send('Server monitoring report sent!');
 });
 
@@ -52,9 +58,10 @@ app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 
-setInterval(() => {
-  console.log('Executing scheduled check at:', new Date().toLocaleString());
-  checkLinks();
-}, 12 * 60 * 60 * 1000); 
 
-checkLinks();
+setInterval(async () => {
+  console.log('Executing scheduled check at:', new Date().toLocaleString());
+  await sendGetRequest();
+}, 2 * 60 * 1000); 
+
+sendGetRequest();
