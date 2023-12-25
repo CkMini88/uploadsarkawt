@@ -224,11 +224,7 @@ case 'project_notification':
 
 app.get('/ping', (req, res) => {
   const timeoutMilliseconds = 15000;
-
-  
-  res.send('Pong!');
-
-  
+  res.send('Pong!');  
   const timeoutId = setTimeout(() => {
     res.status(500).send('Timeout: Pong not received within 15 seconds');
   }, timeoutMilliseconds);
