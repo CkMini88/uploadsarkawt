@@ -45,7 +45,6 @@ const sendGetRequest = async () => {
   }
 };
 
-// Function to send self-ping
 const sendSelfPing = async () => {
   const currentTimeStamp = new Date().toLocaleString('en-US', { timeZone: 'Asia/Baghdad' });
 
@@ -53,7 +52,6 @@ const sendSelfPing = async () => {
     const startTime = new Date();
     console.log(`Sending self-ping at ${startTime.toLocaleString()}`);
 
-    // Use the self-ping URL from the environment variable
     await axios.get(process.env.SELF_PING_URL, { timeout: 20000 });
 
     const endTime = new Date();
@@ -82,7 +80,6 @@ app.get('/send-monitoring-report', async (req, res) => {
   res.send('Server monitoring report sent!');
 });
 
-// Route for self-ping
 app.get('/self-ping', async (req, res) => {
   await sendSelfPing();
   res.send('Self-ping executed!');
@@ -92,13 +89,11 @@ app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 
-// Scheduled task for regular monitoring every 2 minutes
 setInterval(async () => {
   console.log('Executing scheduled check at:', new Date().toLocaleString());
   await sendGetRequest();
 }, 2 * 60 * 1000);
 
-// Scheduled task for self-ping every 1 minute
 setInterval(async () => {
   console.log('Executing self-ping check at:', new Date().toLocaleString());
   await sendSelfPing();
