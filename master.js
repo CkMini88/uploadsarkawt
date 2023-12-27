@@ -31,12 +31,12 @@ const sendGetRequest = async () => {
       console.log(`Got a response for ${link.name} at ${endTime.toLocaleString()} in ${responseTime} milliseconds`);
 
       if (responseTime > 20000) {
-        const errorMessage = `⚠️ [Alert System Unresponse] ⚠️\n\nAttention: 🚨 The monitoring system has detected a slow response from Server ${links.indexOf(link) + 1}.!!\n\nSystem Details 🔍\n………………………………………………….\n👨 Moniter-Name: Kosar Tarkhany 👀\n\n💻 System: ${link.name}\n\n🕒 Time-Stamp: ${currentTimeStamp}\n\n⏱️ Response Time: ${responseTime} milliseconds`;
+        const errorMessage = `⚠️ [Alert System Unresponsive] ⚠️\n\nAttention: 🚨 The monitoring system has detected a slow response from Server ${links.indexOf(link) + 1}.!!\n\nSystem Details 🔍\n………………………………………………….\n👨 Monitor-Name: Kosar Tarkhany 👀\n\n💻 System: ${link.name}\n\n🕒 Time-Stamp: ${currentTimeStamp}\n\n⏱️ Response Time: ${responseTime} milliseconds`;
 
         bot.sendMessage(chatId, errorMessage);
       }
     } catch (error) {
-      const errorMessage = `⚠️ [Alert System Unresponsive] ⚠️\n\nAttention: 🚨 The monitoring system has detected Server SleepDown.!!\n\nSystem Details 🔍\n………………………………………………….\n👨 Moniter-Name: Kosar Tarkhany 👀\n\n💻 System: ${link.name}\n\n🕒 Time-Stamp: ${currentTimeStamp}\n\n🚨 Server-Status: Down\n\n🔢 Server-Number: ${links.indexOf(link) + 1}\n\n❌ Unresponded-PingNum: 1 Ping`;
+      const errorMessage = `⚠️ [Alert System Unresponsive] ⚠️\n\nAttention: 🚨 The monitoring system has detected Server SleepDown.!!\n\nSystem Details 🔍\n………………………………………………….\n👨 Monitor-Name: Kosar Tarkhany 👀\n\n💻 System: ${link.name}\n\n🕒 Time-Stamp: ${currentTimeStamp}\n\n🚨 Server-Status: Down\n\n🔢 Server-Number: ${links.indexOf(link) + 1}\n\n❌ Unresponded-PingNum: 1 Ping`;
 
       bot.sendMessage(chatId, errorMessage);
     }
@@ -48,6 +48,10 @@ const sendGetRequest = async () => {
 const app = express();
 const port = 3000;
 
+app.head('/send-monitoring-report', async (req, res) => {
+  res.status(200).end();
+});
+
 app.get('/send-monitoring-report', async (req, res) => {
   await sendGetRequest();
   res.send('Server monitoring report sent!');
@@ -57,7 +61,6 @@ app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 
-// Scheduled task for regular monitoring every 2 minutes
 setInterval(async () => {
   console.log('Executing scheduled check at:', new Date().toLocaleString());
   await sendGetRequest();
