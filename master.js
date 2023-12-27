@@ -45,33 +45,6 @@ const sendGetRequest = async () => {
   }
 };
 
-const sendSelfPing = async () => {
-  const currentTimeStamp = new Date().toLocaleString('en-US', { timeZone: 'Asia/Baghdad' });
-
-  try {
-    const startTime = new Date();
-    console.log(`Sending self-ping at ${startTime.toLocaleString()}`);
-
-    await axios.get(process.env.SELF_PING_URL, { timeout: 20000 });
-
-    const endTime = new Date();
-    const responseTime = endTime - startTime;
-
-    console.log(`Got a response for self-ping at ${endTime.toLocaleString()} in ${responseTime} milliseconds`);
-
-    if (responseTime > 20000) {
-      const errorMessage = `⚠️ [Alert System Unresponse] ⚠️\n\nAttention: 🚨 The monitoring system has detected a slow response from self-ping.!!\n\nSystem Details 🔍\n………………………………………………….\n👨 Moniter-Name: Kosar Tarkhany 👀\n\n💻 System: Self-Ping\n\n🕒 Time-Stamp: ${currentTimeStamp}\n\n⏱️ Response Time: ${responseTime} milliseconds`;
-
-      bot.sendMessage(chatId, errorMessage);
-    }
-  } catch (error) {
-    console.log(`Error sending self-ping: ${error.message}`);
-    const errorMessage = `⚠️ [Alert System Unresponsive] ⚠️\n\nAttention: 🚨 The monitoring system has detected Self-Ping Unresponsive.!!\n\nSystem Details 🔍\n………………………………………………….\n👨 Moniter-Name: Kosar Tarkhany 👀\n\n💻 System: Self-Ping\n\n🕒 Time-Stamp: ${currentTimeStamp}\n\n🚨 Server-Status: Down\n\n❌ Unresponded-PingNum: 1 Ping`;
-
-    bot.sendMessage(chatId, errorMessage);
-  }
-};
-
 const app = express();
 const port = 3000;
 
@@ -80,21 +53,12 @@ app.get('/send-monitoring-report', async (req, res) => {
   res.send('Server monitoring report sent!');
 });
 
-app.get('/self-ping', async (req, res) => {
-  await sendSelfPing();
-  res.send('Self-ping executed!');
-});
-
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 
+// Scheduled task for regular monitoring every 2 minutes
 setInterval(async () => {
   console.log('Executing scheduled check at:', new Date().toLocaleString());
   await sendGetRequest();
 }, 2 * 60 * 1000);
-
-setInterval(async () => {
-  console.log('Executing self-ping check at:', new Date().toLocaleString());
-  await sendSelfPing();
-}, 1 * 60 * 1000);
