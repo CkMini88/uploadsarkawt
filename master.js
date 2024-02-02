@@ -1,10 +1,12 @@
+
 const TelegramBot = require('node-telegram-bot-api');
 const fs = require('fs');
 const express = require('express');
 const bodyParser = require('body-parser');
+const axios = require('axios');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000; 
 
 app.use(bodyParser.json());
 
@@ -27,7 +29,7 @@ const askQuestions = (chatId, questions) => {
           });
         });
     } else {
-        const translatedText = 'تحية طيبة، وشكراً جزيلاً على تقديم الشكر لتقديم إجابات على جميع الأسئلة. كانت كلماتك ملهمة وتعكس التفاؤل. يمكنك التواصل مباشرة مع @SarkawtDxn عند الضغط على اسمه لمزيد من التفاصيل والتواصل مع فريق الدعم.';
+        const translatedText='كثيرًا من الشكر لك بيريز على تقديم جميع الأسئلة. تم الرد على استفساراتك بكل وقت ممكن. يمكنك التواصل مباشرةً معهم عن طريق النقر على هذا الاسم (@SarkawtDxn) للتواصل مع الخبراء';
         bot.sendMessage(chatId, translatedText);
       }
       
@@ -38,12 +40,12 @@ const askQuestions = (chatId, questions) => {
 
   const buttons = [
     [
-      { text: 'عنوان المشروع', callback_data: 'project_notification' },
-      { text: 'أنا جاهز للعمل', callback_data: 'button_2' }
+      { text: 'التعرف على المشروع', callback_data: 'project_notification' },
+      { text: 'أريد أن أبدأ العمل.', callback_data: 'button_2' },
     ],
     [
-      { text: 'رؤية أشخاص النجاح', url: 'https://t.me/+nm57J6RBeLRhMDNi' },
-      { text: 'شبكات التواصل الاجتماعي', callback_data: 'button_4' },
+      { text: 'شاهد الأشخاص الناجحين.', url: 'https://t.me/+w0OVDtcL3HUwMWEy' },
+      { text: 'وسائل التواصل الاجتماعي الخاصة بنا', callback_data: 'button_4' },
     ],
   ];
 
@@ -53,12 +55,12 @@ const askQuestions = (chatId, questions) => {
     switch (callbackQuery.data) {
 case 'project_notification':
   const options = [
-    { text: 'تقييم مشروع بصوت', callback_data: 'voice_option' },
-    { text: 'تقييم المشروع بالنص', callback_data: 'text_option' },
+    { text: 'التعرف على المشروع من خلال الصوت', callback_data: 'voice_option' },
+    { text: 'التعرف على المشروع من خلال نص', callback_data: 'text_option' },
 ];
 
 
-  bot.sendMessage(chatId, 'اختر خيارًا', {
+  bot.sendMessage(chatId, 'اختر خيارا.', {
       reply_markup: {
           inline_keyboard: [options],
       },
@@ -66,7 +68,7 @@ case 'project_notification':
   break;
 
 
-        bot.sendMessage(chatId, 'اختر خيارًا', {
+        bot.sendMessage(chatId, 'اختر خيارا.', {
           reply_markup: {
             inline_keyboard: [options],
           },
@@ -76,27 +78,28 @@ case 'project_notification':
       case 'text_option':
         
       const textOptionValue = `
-      البدء في مشروع الحياة
-    مرحباً بكم! في هذا الوقت الجميل، نحن في شركة DXN نتحرك نحو تحقيق مشروعنا.
-    تأسست شركة DXN على يد الدكتور ليم سويتشين في عام 1993. لدينا أكثر من 105 مكتبًا رئيسيًا وفروعاً في جميع أنحاء العالم، ولدينا أيضًا مكاتب رئيسية في إقليم كوردستان في جميع المحافل الأربعة. تعمل هذه الشركة في مجال التسويق المباشر.
-    تقدم هذه الشركة منتجات صحية ذات جودة عالية تعزز الصحة اليومية. جميع منتجاتنا تعتمد على تكنولوجيا فريدة.
-    مكمل غذائي فريد مثل الصابون والشامبو والمحجون.
-    مكمل غذائي ثانٍ لتعزيز الغذاء الصحي لتعزيز الصحة العامة ودعم نمو الأطفال والرضع.
-    المكمل الغذائي الثالث: مشروبات الطاقة.
-    المكمل الغذائي الرابع: منتجات العناية الشخصية مثل كريمات التجميل ومزيلات العرق.
-    كيفية العمل في هذه الشركة وكيفية تحقيق الدخل.
-    عضو في الشركة ذي ثلاثة إدراكات.
-    تقدم هذه الفرصة الدخل الشهري الذي يمكن أن يصل إلى 10،000 دينار وأكثر بكثير دون الحاجة إلى بيع.
-    الدخل الثاني: يحصل الفائزون على نقاط على كل عملية بيع وفقًا لسعر البيع وفي نفس الوقت تحقق هذه النقاط رواتب شهرية معينة.
-    الدخل الثالث: إذا قمت بتسجيل الأشخاص وفقًا للخطة، فإنك ستصبح قائدًا وتحصل على حصص من المبيعات الشهرية.
-    الدخل الرابع: يمكنك الحصول على دخل إضافي من خلال بناء فريق وبيع منتجات الشركة.
-    الشركة توفر أربعة خيارات رئيسية.
-    1- الصحة
-    2- الحرية في الوقت والمكان
-    3- دخل مالي مستقر
-    4- فرصة عمل عالمية
-    إذا كنت ترغب في تحسين حياتك وحياة عائلتك، انضم إلى مشروعك الخاص وكن جزءًا من نجاحنا.
-    للحصول على مزيد من المعلومات والبدء في الانضمام، اتصل بالعضو الذي قدم لك هذه الفرصة.
+      إكمال المشروع أدناه  
+    مرحبًا بك، هذا الوقت جيد. نحن في شركة DXN في لاتينية لإكمال مشروعنا  
+    شركة DXN هي شركة جديدة تمامًا تم إنشاؤها بواسطة الدكتور ليم سويجين في عام 1993. لديهم أكثر من 105 مكتبًا ويتمتعون بشعبيتهم في إقليم كوردستان حيث يوجد لديهم مكاتب في جميع أربع المحافظات. هذه الشركة تعمل في المبيعات المباشرة.  
+    هذه الشركة لديها نظام فريد من نوعه يتطلب النشاط اليومي. جميع المنتجات ذات جودة عالية بنسبة 100 في المائة.  
+    بيانات العملاء في الربع الأول للعام  
+    الربع الأول. منتجات العناية الشخصية مثل الصابون وشامبو ومزيل العرق  
+    الربع الثاني. المنتجات الغذائية هذه المنتجات تساعد على تحسين الصحة العامة وتناسب الجميع من الكبار والصغار.  
+    الربع الثالث. مشروبات مثل المشروبات الغازية  
+    الربع الرابع. العناية بالبشرة مثل الكريمات المرطبة ومزيلات العرق  
+    كيفية كسب المال من خلال هذه الشركة وكيفية الحصول على العائدات.  
+    يتمتع أعضاء الشركة بثلاث طرق لكسب الأرباح.  
+    الطريقة الأولى هي الحصول على عائد شهري يبلغ 10000 دولار أمريكي أو أكثر دون بيع أي شيء.  
+    الطريقة الثانية لكسب الأرباح هي بيع المنتجات بشكل شخصي وكسب نقاط على كل منتج تبيعه وبالنسبة لهذه النقاط يمكنك الحصول على دفعة نقدية في نهاية كل شهر.  
+    الطريقة الثالثة هي دعوة أشخاص آخرين للانضمام إلى الشركة كأعضاء في فريقك الخاص والحصول على نسبة من أرباحهم ولهم فرصة لتحقيق دخل كبير دون الحاجة إلى أي استثمارات مالية.  
+    تنويه: إذا كانت النسبة صفر ولم يتم الحصول على أي دفعة نقدية للانضمام ويمكنك بيع البضائع عبر الإنترنت. كل ما عليك فعله هو البيع النقدي وتوزيع الأرباح بالتساوي مع الشركاء.  
+    تستطيع الاستفادة من أرباح هذه الشركة  
+    1- الصحة  
+    2- الحرية في الوقت والمكان  
+    3- العائدات المرتفعة  
+    4- الفرص العالمية  
+    إذا كنت ترغب في تغيير حياتك وحياة عائلتك والاستمتاع بحياة مريحة وهادئة ، يمكننا مساعدتك في الوصول إلى أعلى مستوى  
+    للحصول على المزيد من المعلومات والانضمام إلى الشركة والبدء في جني الأرباح اليوم  
     `;
     
         bot.sendMessage(chatId, textOptionValue);
@@ -120,20 +123,19 @@ case 'project_notification':
 
       case 'button_2':
         if (callbackQuery.from.username) {
-            const questions = [
-                'ما هو اسمك؟',
-                'كم عمرك؟',
-                'أين تعيش؟',
-                'هل لديك وظيفة؟',
-                'كيف تقضي وقت فراغك؟',
-            ];
-            
+          const questions = [
+            'ما اسمك؟',
+            'کم العمرک؟',
+            'أين تعيش؟',
+            'هل لديك أي شهادة؟',
+            'كيف تقضي وقت فراغك؟',
+          ];
           askQuestions(chatId, questions);
         } else {
-          const buttonText = 'انقر هنا';
+          const buttonText = 'انقر هنا.';
           const buttonCallback = 'send_images';
 
-          bot.sendMessage(chatId, 'تكرمًا، قد لا أكون على دراية بأسماء الفنانين الحقيقية بسبب طبيعة عملي، ولا يمكنني توليد أسماء بدقة. إذا كنت تقصد شيئًا آخر، يرجى إعطائي مزيد من التفاصيل أو توضيح.' + buttonText, {
+          bot.sendMessage(chatId, ' الرجاء المعذرة، ليس لديك اسم مستخدم لذا لا يمكنني تقديم تعليقاتك. يرجى إنشاء اسم مستخدم صحيح.' + buttonText, {
             reply_markup: {
               inline_keyboard: [
                 [{ text: buttonText, callback_data: buttonCallback }],
@@ -163,7 +165,7 @@ case 'project_notification':
                 console.error('Error sending image:', error);
               });
           } else {
-            bot.sendMessage(chatId, 'يرجى إنشاء اسم فنان لهذه الصورة.');
+            bot.sendMessage(chatId, 'قم بإنشاء اسم مستخدم بهذه الصورة.');
           }
         };
 
@@ -171,10 +173,10 @@ case 'project_notification':
         break;
 
         case 'button_3':
-          bot.sendMessage(chatId, 'اختر خيارًا', {
+          bot.sendMessage(chatId, 'اختر خيارا.', {
             reply_markup: {
               inline_keyboard: [
-                { text: 'Open Link', url: 'https://t.me/+nm57J6RBeLRhMDNi' },
+                { text: 'Open Link', url: 'https://t.me/+w0OVDtcL3HUwMWEy' },
               ],
             },
           });
@@ -193,7 +195,7 @@ case 'project_notification':
           [{ text: 'WhatsApp', url: whatsappLink }],
         ];
 
-        bot.sendMessage(chatId, 'اختر خيارًا', {
+        bot.sendMessage(chatId, 'اختر خيارا.', {
           reply_markup: {
             inline_keyboard: socialMediaButtons,
           },
@@ -204,36 +206,24 @@ case 'project_notification':
         break;
     }
   });
-
   bot.onText(/\/start/, (msg) => {
     const chatId = msg.chat.id;
     const fullName = msg.from.first_name + ' ' + msg.from.last_name;
-    const greetingMessage = `مرحبًا ${fullName}، أهلاً بك في مشروع حياتك. يرجى النقر على زر (تقييم المشروع) للبدء.`;
-
-  const copyrightMessage = `\n\n\n© ${new Date().getFullYear()} Kosar Tarkhany & Aso Jabary. All Rights Reserved`;
-
-  const combinedMessage = greetingMessage + copyrightMessage;
-
-  bot.sendMessage(chatId, combinedMessage, {
-    reply_markup: {
-      inline_keyboard: buttons,
-    },
+    
+    const greetingMessage = `مرحبا السيد ${fullName} مرحبا بكم في مشروع حياتك ، يرجى النقر فوق الزر "معرفة المشروع" للبدء.`;
+  
+    const copyrightMessage = `\n\n\n© ${new Date().getFullYear()} Kosar Tarkhany. All Rights Reserved`;
+  
+    const combinedMessage = greetingMessage + copyrightMessage;
+  
+    bot.sendMessage(chatId, combinedMessage, {
+      reply_markup: {
+        inline_keyboard: buttons,
+      },
+    });
   });
-});
-
-
-app.get('/ping', (req, res) => {
-  const timeoutMilliseconds = 15000;
-
   
-  res.send('Pong!');
-
+  app.listen(port, () => {
+    console.log(`Express server is running on port ${port}`);
+  });
   
-  const timeoutId = setTimeout(() => {
-    res.status(500).send('Timeout: Pong not received within 15 seconds');
-  }, timeoutMilliseconds);
-});
-
-app.listen(port, () => {
-  console.log(`Express server is running on port ${port}`);
-});
