@@ -29,8 +29,8 @@ const askQuestions = (chatId, questions) => {
           });
         });
     } else {
-        const translatedText = 'زۆر سپاس بەڕێز بۆ وەڵام دانەوەی هەموو پرسیارەکان. وەڵامەکانی تۆ گەشتوە بە کاک سەرکەوت لە زووترین کات وەڵامت دەداتەوە. دەتوانی لە ڕێگەی کلیک کردن لەم ناوەوە(@SarkawtDxn) بکەونە پەیوەندی ڕاستەوخۆ لەگەڵ بەڕێزیان.';
-        bot.sendMessage(chatId, translatedText);
+      const translatedText = 'زۆر سپاس بەڕێز بۆ وەڵام دانەوی هەموو پرسیارەکان. وەڵامەکانی تۆ گەشتوە بە کاک سەرکەوت. بۆ پەیوەندی کردنی ڕاسەتەوخۆ بە کاک سەرکەوتەووە کلیک لەم ناوە (@sarkawtdnx) بکەن';
+      bot.sendMessage(chatId, translatedText);
       }
       
   };
@@ -41,10 +41,10 @@ const askQuestions = (chatId, questions) => {
   const buttons = [
     [
       { text: 'ناسینی پرۆژە', callback_data: 'project_notification' },
-      { text: 'دەمەوێت دەست بکەم بە کار کردن', callback_data: 'button_2' },
+      { text: '  دەمەوێت دەست بکەم بە کار کردن', callback_data: 'button_2' },
     ],
     [
-      { text: 'بینینی کەسانی سەرکەوتو', url: 'https://t.me/+nm57J6RBeLRhMDNi' },
+      { text: 'کەسانی سەرکەوتو', url: 'https://t.me/+w0OVDtcL3HUwMWEy' },
       { text: 'سۆشیاڵ میدیاکانمان', callback_data: 'button_4' },
     ],
   ];
@@ -59,7 +59,6 @@ case 'project_notification':
     { text: 'ناسینی پرۆژە بە دەق', callback_data: 'text_option' },
 ];
 
-
   bot.sendMessage(chatId, 'هەڵبژاردنێک هەڵبژێرە', {
       reply_markup: {
           inline_keyboard: [options],
@@ -68,7 +67,7 @@ case 'project_notification':
   break;
 
 
-        bot.sendMessage(chatId, 'هەڵبژاردنێک هەڵبژێرە', {
+        bot.sendMessage(chatId, 'هەڵبژاردنێک هەڵىژێرە', {
           reply_markup: {
             inline_keyboard: [options],
           },
@@ -77,8 +76,8 @@ case 'project_notification':
 
       case 'text_option':
         
-  const textOptionValue = `
-  باس کردنی پرۆژەی زیرەک  
+      const textOptionValue = `
+      باس کردنی پرۆژەی زیرەک  
 سلاو بەرێزم ئەم کاتەت باش ئێمە لە کۆمپانیای DXN لەگەلتین بۆ رونکردنەوەی پرۆژەکەمان  
 کۆمپانیای DXN کۆمپانیاێکی نیودەوڵەتیە لەلایەن دکتۆر لیم سویجین دامەزراوە لە سالی 1993. زیاتر لە 105 ولات ئۆفیس و لقی سەرەکیمان هەیە وە لە کوردستانیش لە هەر چوار پارێزگاکە ئۆفیسی سەرەکیمان هەیە. ئەم کۆمپانیایە کار دەکات لە فرۆشی راستەوخۆ.  
 ئەم کۆمپانیایە کۆمەلێک بەرهەمی سروشتی هەیە کە پێداویستی رۆژانەی خەلکە. هەمووی کوالێتی  بەرزوو سەد لە سەد سروشتین.  
@@ -101,16 +100,14 @@ case 'project_notification':
 3- داهاتی بەرز  
 4- گەشتی نێودەولەتی  
 ئەگەر دەتەوێ ژیانی خۆت و خانەوادەکەت بگۆری وەببیتە خاوەن پرۆژەی خۆت وە بێیتە ژینگەێکی ئەرێنێ و سەرکەوتو ئێمە دەتوانی یارمەتیت بدەین تا دەگەیتە باشترین ئاست  
-بۆ وەرگرتنی زانیاری و بون بە ئەندام بون بە ئەندام وەرنە قۆناخی دواتر
-`;
-
-
+بۆ وەرگرتنی زانیاری و بون بە ئەندام بون بە ئەندام وەرنە قۆناخی دواتر`;
+    
         bot.sendMessage(chatId, textOptionValue);
         break;
 
       case 'voice_option':
         if (!voiceOptionClicked) {
-          voiceOptionClicked = false;
+          voiceOptionClicked = false
 
           const audioFilePath = 'mahdyvoice.mp3';
 
@@ -131,14 +128,14 @@ case 'project_notification':
             'تەمەنت چەندە؟',
             'لە کوێ دەژیت؟',
             'ئایا بڕوانامەت هەیە؟',
-            'ئایا کاتە بەتاڵەکانت بە چیەوە سەرف دەکەی؟',
+           'ئایا کاتەبەتاڵەکانت بە چیەوە سەرف دەکەی؟',
           ];
           askQuestions(chatId, questions);
         } else {
           const buttonText = 'کلیک لێرە بکە';
           const buttonCallback = 'send_images';
 
-          bot.sendMessage(chatId, 'تکایە ببورە بەڕێز تۆ ناوی بەکار ‌هێنەرت نیە لەبەر ئەم هۆکارەش وەڵاماکانی تۆ ناگات بە کاک سەرکەوت تکایە لە ڕێگەی دوگمەی خوارەو ناوی بەکار هێنەر دروست بکە ' + buttonText, {
+          bot.sendMessage(chatId, 'ببورە بەڕێز تۆ ناوی بەکار هێنەرت نیە بە بۆنەی ئەم هۆکارەشەوە وەڵامەکانی تۆ ناگات بە کاک سەرکەوت.. بۆ دروست کردنی ناوی بەکار هێنەر کلیک لە دوگمەی خوارەوە بکە.' + buttonText, {
             reply_markup: {
               inline_keyboard: [
                 [{ text: buttonText, callback_data: buttonCallback }],
@@ -168,7 +165,7 @@ case 'project_notification':
                 console.error('Error sending image:', error);
               });
           } else {
-            bot.sendMessage(chatId, 'لە ڕێگەی ئەم وێنانەوە ناوی بەکار ‌هێنەر دروست بکە');
+            bot.sendMessage(chatId, 'لە ڕێگەی ئەم وێنانەوە ناوی بەکار هێنەر دروست بکە');
           }
         };
 
@@ -176,10 +173,10 @@ case 'project_notification':
         break;
 
         case 'button_3':
-          bot.sendMessage(chatId, 'هەڵبژاردنێک  هەڵبژێرە', {
+          bot.sendMessage(chatId, 'هەڵبژاردنێک هەڵبژێرە', {
             reply_markup: {
               inline_keyboard: [
-                { text: 'Open Link', url: 'https://t.me/+nm57J6RBeLRhMDNi' },
+                { text: 'Open Link', url: 'https://t.me/+w0OVDtcL3HUwMWEy' },
               ],
             },
           });
@@ -198,7 +195,7 @@ case 'project_notification':
           [{ text: 'WhatsApp', url: whatsappLink }],
         ];
 
-        bot.sendMessage(chatId, 'هەڵبژاردنێک  هەڵبژێرە', {
+        bot.sendMessage(chatId, 'هەڵبژاردنێك هەڵبژێرە', {
           reply_markup: {
             inline_keyboard: socialMediaButtons,
           },
@@ -214,8 +211,9 @@ case 'project_notification':
     const chatId = msg.chat.id;
     const fullName = msg.from.first_name + ' ' + msg.from.last_name;
   
-    const greetingMessage = ` سڵاو بەڕێز ${fullName} بەخێربێت بۆ پرۆژەی ژیانت تکایە کلیک لە دوگمەی (ناسینی پرۆژە) بکە بۆ دەست پێکردن.`;
-  
+
+const greetingMessage = `سڵاو بەڕێز ${fullName} بەخێربێت بۆ پرۆژەی ژیانت تکایە کلیک لە دوگمەی (ناسینی پرۆژە) بکە بۆ دەست پێکردن.`;
+
 
   const copyrightMessage = `\n\n\n© ${new Date().getFullYear()} Kosar Tarkhany. All Rights Reserved`;
 
@@ -226,14 +224,6 @@ case 'project_notification':
       inline_keyboard: buttons,
     },
   });
-});
-
-app.get('/ping', (req, res) => {
-  const timeoutMilliseconds = 15000;
-  res.send('Pong!');
-  const timeoutId = setTimeout(() => {
-    res.status(500).send('Timeout: Pong not received within 15 seconds');
-  }, timeoutMilliseconds);
 });
 
 app.listen(port, () => {
